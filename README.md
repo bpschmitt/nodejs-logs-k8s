@@ -20,9 +20,3 @@ kubectl apply -f k8s/deployment.yaml
 {"entity.guid":"MzMwNzA4N3xBUE18QVBQTElDQVRJT058NTQyMDU1NTMy","entity.name":"logs-demo-1","entity.type":"SERVICE","hostname":"logs-demo-1-7574954cb-dhk7g","level":"info","message":"You've visited the home page.  Your random number is 15","span.id":"cadfeba2165050c6","timestamp":1634569493818,"trace.id":"ebefe422fe08cb4cca9fb48b90081d8f"}
 {"entity.guid":"MzMwNzA4N3xBUE18QVBQTElDQVRJT058NTQyMDU1NTMy","entity.name":"logs-demo-1","entity.type":"SERVICE","hostname":"logs-demo-1-7574954cb-dhk7g","level":"info","message":"You've visited the home page.  Your random number is 95","span.id":"86137b068df5f73b","timestamp":1634569504871,"trace.id":"b7cec2940f7ce26f51962fd2d8fb4351"}
 ```
-
-## Need to Document
-
-```
-- Example fluent-bit.conf
-```
