@@ -1,0 +1,92 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logs-demo-1
+  namespace: team-one
+spec:
+  ports:
+    - port: 8000
+      targetPort: 4000
+  selector:
+    app: logs-demo-1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logs-demo-2
+  namespace: team-two
+spec:
+  ports:
+    - port: 8000
+      targetPort: 4000
+  selector:
+    app: logs-demo-2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logs-demo-1
+  namespace: team-one
+spec:
+  selector:
+    matchLabels:
+      app: logs-demo-1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: logs-demo-1
+    spec:
+      containers:
+      - name: nodejs-logs-k8s
+        image: bpschmitt/nodejs-logs-k8s:0.1
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "256M"
+            cpu: "250m"
+        ports:
+        - containerPort: 4000
+        env:
+        - name: NEW_RELIC_LICENSE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: nrlicensekey-teamone
+              key: nrlicensekey
+        - name: NEW_RELIC_APP_NAME
+          value: "logs-demo-1"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logs-demo-2
+  namespace: team-two
+spec:
+  selector:
+    matchLabels:
+      app: logs-demo-2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: logs-demo-2
+    spec:
+      containers:
+      - name: nodejs-logs-k8s
+        image: bpschmitt/nodejs-logs-k8s:0.1
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "256M"
+            cpu: "250m"
+        ports:
+        - containerPort: 4000
+        env:
+        - name: NEW_RELIC_LICENSE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: nrlicensekey-teamtwo
+              key: nrlicensekey
+        - name: NEW_RELIC_APP_NAME
+          value: "logs-demo-2"
